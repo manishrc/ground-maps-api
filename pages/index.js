@@ -7,13 +7,12 @@ const NOT_A_NUMBER_REGEX = /[^\d]/g;
 
 export default function Home() {
   const router = useRouter();
-
   const checkZip = (str) => ZIP_REGEX.test(str);
 
   const [zip, setZip] = useState(router.query.q);
   const [isZip, setIsZip] = useState(checkZip(router.query.q));
 
-  const handleChange = (value) => {
+  const handleZipChange = (value) => {
     value = value.replace(NOT_A_NUMBER_REGEX, "");
     const isZip = checkZip(value);
 
@@ -40,15 +39,26 @@ export default function Home() {
       <main>
         <input
           type="search"
+          autoFocus={true}
           placeholder="Enter ZIP Code..."
           value={zip}
           maxLength={5}
-          onChange={(event) => handleChange(event.target.value)}
+          onChange={(event) => handleZipChange(event.target.value)}
         />
+        <p>
+          Try{" "}
+          <a onClick={() => handleZipChange("94043")}>Googleplex, CA (94043)</a>
+        </p>
 
         <p></p>
+        {isZip ? <Maps zip={zip} /> : null}
+
+        <h2>API</h2>
+        <pre>
+          <code>{"/api/<to|from>/<zip>/<fedex|ups></zip>"}</code>
+        </pre>
       </main>
-      {isZip ? <Maps zip={zip} /> : null}
+
       <footer>
         <hr />
         Made by <a href="https://twitter.com/manishrc">@manishrc</a>
@@ -67,7 +77,6 @@ function Maps({ zip }) {
       </div>
       <div>
         <h2 className="description">UPS</h2>
-
         <GroundMap zip={zip} direction="from" />
         <GroundMap zip={zip} direction="to" />
       </div>
