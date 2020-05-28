@@ -29,10 +29,9 @@ export default async (req, res) => {
   // Prepare request for UPS
   if (shipper === "ups") {
     endpoint = UPS_ENDPOINT;
-    direction = direction === "to" ? "O" : "1";
     data = {
       zip: zipcode,
-      stype: direction,
+      stype: direction === "to" ? "O" : "D",
       submit: "Submit",
     };
     headers = {
@@ -45,10 +44,9 @@ export default async (req, res) => {
   // Prepare request for FEDEX
   if (shipper === "fedex") {
     endpoint = FEDEX_ENDPOINT;
-    direction = direction === "to" ? "outbound" : "inbound";
     data = {
       originZip: zipcode,
-      direction: direction,
+      direction: direction === "to" ? "outbound" : "inbound",
       mapType: "00",
       resType: "01",
       submitValue: "View+map",
