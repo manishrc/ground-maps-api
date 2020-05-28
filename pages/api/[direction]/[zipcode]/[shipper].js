@@ -34,7 +34,7 @@ export default async (req, res) => {
     endpoint = UPS_ENDPOINT;
     data = {
       zip: zipcode,
-      stype: direction === "to" ? "O" : "D",
+      stype: direction === "to" ? "D" : "O",
       submit: "Submit",
     };
     headers = {
@@ -49,7 +49,7 @@ export default async (req, res) => {
     endpoint = FEDEX_ENDPOINT;
     data = {
       originZip: zipcode,
-      direction: direction === "to" ? "outbound" : "inbound",
+      direction: direction === "to" ? "inbound" : "outbound",
       mapType: "00",
       resType: "01",
       submitValue: "View+map",
