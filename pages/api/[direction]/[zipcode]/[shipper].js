@@ -6,24 +6,27 @@ export default async (req, res) => {
   let endpoint, headers, data, regex, hostPrefix;
 
   if (!(direction && ["to", "from"].includes(direction))) {
-    res.statusCode = 500;
-    res.send(
-      `Expected URL format: "/<to|from>/<zip>/<fedex|ups>"\nGot "${direction}" for instead of "to" or "from"`
-    );
+    res
+      .status(500)
+      .send(
+        `Expected URL format: "/<to|from>/<zip>/<fedex|ups>"\nGot "${direction}" for instead of "to" or "from"`
+      );
   }
 
   if (!(zipcode && /^\d{5}$/.test(zipcode))) {
-    res.statusCode = 500;
-    res.send(
-      `Expected URL "/<to|from>/<zip>/<fedex|ups>"\nGot "${zipcode}" instead of a zipcode with 5 characters.`
-    );
+    res
+      .status(500)
+      .send(
+        `Expected URL "/<to|from>/<zip>/<fedex|ups>"\nGot "${zipcode}" instead of a zipcode with 5 characters.`
+      );
   }
 
   if (!(shipper && ["fedex", "ups"].includes(shipper))) {
-    res.statusCode = 500;
-    res.send(
-      `Expected URL format: "/<to|from>/<zip>/<fedex|ups>"\nGot "${shipper}" for instead of "ups" or "fedex"`
-    );
+    res
+      .status(500)
+      .send(
+        `Expected URL format: "/<to|from>/<zip>/<fedex|ups>"\nGot "${shipper}" for instead of "ups" or "fedex"`
+      );
   }
 
   // Prepare request for UPS
@@ -37,7 +40,7 @@ export default async (req, res) => {
     headers = {
       "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
     };
-    regex = /(\/using\/services\/servicemaps\/maps\d+\/map\w+.gif)/gi;
+    regex = /(\/using\/services\/servicemaps\/maps\d+\/(Rec)?map\w+.gif)/gi;
     hostPrefix = "https://www.ups.com";
   }
 
