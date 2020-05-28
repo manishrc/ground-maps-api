@@ -55,7 +55,7 @@ export default function Home() {
 
         <h2>API</h2>
         <pre>
-          <code>{"/api/<to|from>/<zip>/<fedex|ups></zip>"}</code>
+          <code>{"/api/<to|from>/<zip>/<fedex|ups>/"}</code>
         </pre>
       </main>
 
