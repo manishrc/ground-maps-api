@@ -4,8 +4,8 @@
   <ShortName>GroundMap</ShortName>
   <Description>See FedEx &amp; UPS Ground Maps</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Url type="text/html" template="/">
+  <Url type="text/html" template="https://ground-map.manishrc.com/">
     <Param name="q" value="{searchTerms}"/>
   </Url>
-  <moz:SearchForm>/</moz:SearchForm>
+  <moz:SearchForm>https://ground-map.manishrc.com/</moz:SearchForm>
 </OpenSearchDescription>
