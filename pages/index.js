@@ -4,21 +4,23 @@ import Head from "next/head";
 
 const ZIP_REGEX = /^\d{5}$/gi;
 const NOT_A_NUMBER_REGEX = /[^\d]/g;
+const checkIfZip = (zip) => zip && ZIP_REGEX.test(zip);
+const parseZip = (str) =>
+  typeof str === "string"
+    ? str.replace(NOT_A_NUMBER_REGEX, "").slice(0, 5)
+    : "";
 
-export default function Home() {
+function Home({ q }) {
   const router = useRouter();
-  const checkZip = (str) => ZIP_REGEX.test(str);
+  const initialZip = parseZip(q);
 
-  const [zip, setZip] = useState(router.query.q);
-  const [isZip, setIsZip] = useState(checkZip(router.query.q));
+  const [zip, setZip] = useState(initialZip);
+  const [isZip, setIsZip] = useState(checkIfZip(initialZip));
 
   const handleZipChange = (value) => {
-    value = value.replace(NOT_A_NUMBER_REGEX, "");
-    const isZip = checkZip(value);
-
+    value = parseZip(value);
     setZip(value);
-    setIsZip(isZip);
-
+    setIsZip(ZIP_REGEX.test(value));
     isZip ? router.push(`/?q=${value}`) : router.replace(`/?q=${value}`);
   };
 
@@ -102,3 +104,8 @@ function MapImage({ zip, direction = "to", fedex = false }) {
 
   return <img src={originalUrl} title={title} alt={`${title}`} />;
 }
+
+Home.getInitialProps = async ({ query: { q } }) => {
+  return { q };
+};
+export default Home;
