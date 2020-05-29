@@ -94,17 +94,11 @@ function GroundMap(props) {
 }
 
 function MapImage({ zip, direction = "to", fedex = false }) {
-  const originalUrl = `https://ground-maps-api.now.sh/api/${direction}/${zip}/${
-    fedex ? "fedex" : "ups"
-  }`;
-  const cloudinaryUrl =
-    `https://res.cloudinary.com/manishrc/image/fetch/` +
-    (fedex ? `w_5100,h_5316,c_crop,g_north/w_1800,q_auto/` : `w_1800,q_auto/`) +
-    originalUrl;
+  const originalUrl = `/api/${direction}/${zip}/${fedex ? "fedex" : "ups"}`;
 
   const title = `${fedex ? "FedEx" : "UPS"} ${
     direction == "to" ? "Inbound" : "Outbound"
   } Ground Map`;
 
-  return <img src={cloudinaryUrl} title={title} alt={`${title}`} />;
+  return <img src={originalUrl} title={title} alt={`${title}`} />;
 }
