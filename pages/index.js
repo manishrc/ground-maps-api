@@ -20,23 +20,35 @@ function Home({ q }) {
   const handleZipChange = (value) => {
     value = parseZip(value);
     setZip(value);
-    setIsZip(ZIP_REGEX.test(value));
+    setIsZip(checkIfZip(value));
     isZip ? router.push(`/?q=${value}`) : router.replace(`/?q=${value}`);
   };
 
   return (
-    <div className="container">
+    <div>
       <Head>
-        <title>Ground Maps for UPS & FedEx</title>
+        <meta charset="utf-8" />
+        <title>FedEx & Ground Maps</title>
+        <meta
+          name="description"
+          content="Get quick transit times for FedEx & UPS using Ground Maps. APIs included."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css"
         />
+        <link
+          rel="search"
+          href="/open-search.xml"
+          type="application/opensearchdescription+xml"
+          title="Search Ground Maps by Zipcode"
+        />
       </Head>
 
       <header>
-        <h1 className="title">UPS & FedEx Ground Maps</h1>
+        <h1>FedEx & Ground Maps</h1>
       </header>
       <main>
         <input
@@ -73,12 +85,12 @@ function Maps({ zip }) {
   return (
     <>
       <div>
-        <h2 className="description">FedEx - Commercial</h2>
+        <h2>FedEx - Commercial</h2>
         <GroundMap zip={zip} direction="from" fedex />
         <GroundMap zip={zip} direction="to" fedex />
       </div>
       <div>
-        <h2 className="description">UPS</h2>
+        <h2>UPS</h2>
         <GroundMap zip={zip} direction="from" />
         <GroundMap zip={zip} direction="to" />
       </div>
@@ -105,7 +117,6 @@ function MapImage({ zip, direction = "to", fedex = false }) {
   return <img src={originalUrl} title={title} alt={`${title}`} />;
 }
 
-Home.getInitialProps = async ({ query: { q } }) => {
-  return { q };
-};
+Home.getInitialProps = async ({ query: { q } }) => ({ q });
+
 export default Home;
