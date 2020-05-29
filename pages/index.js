@@ -99,7 +99,7 @@ function MapImage({ zip, direction = "to", fedex = false }) {
   }`;
   const cloudinaryUrl =
     `https://res.cloudinary.com/manishrc/image/fetch/` +
-    (fedex ? `w_5100,h_ih,c_crop,g_auto/w_1800,q_auto/` : `w_1800,q_auto/`) +
+    (fedex ? `w_5100,h_5316,c_crop,g_north/w_1800,q_auto/` : `w_1800,q_auto/`) +
     originalUrl;
 
   const title = `${fedex ? "FedEx" : "UPS"} ${
