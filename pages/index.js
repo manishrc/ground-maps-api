@@ -27,7 +27,7 @@ function Home({ q }) {
   return (
     <div>
       <Head>
-        <title>FedEx & Ground Maps</title>
+        <title>FedEx & UPS Ground Maps</title>
         <meta
           name="description"
           content="Get quick transit times for FedEx & UPS using Ground Maps. APIs included."
