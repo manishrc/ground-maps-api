@@ -27,7 +27,6 @@ function Home({ q }) {
   return (
     <div>
       <Head>
-        <meta charset="utf-8" />
         <title>FedEx & Ground Maps</title>
         <meta
           name="description"
