@@ -1,6 +1,9 @@
 const UPS_ENDPOINT = "https://www.ups.com/maps/results?loc=en_US";
 const FEDEX_ENDPOINT = "http://www.fedex.com/grd/maps/MapEntry.do";
 
+const getFedexCookie = async () =>
+  fetch(FEDEX_ENDPOINT).then((r) => r.headers.get("set-cookie"));
+
 export default async (req, res) => {
   let { direction, zipcode, shipper } = req.query;
   let endpoint, headers, data, regex, hostPrefix;
@@ -57,8 +60,7 @@ export default async (req, res) => {
     headers = {
       "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       "Accept-Language": "en-US,en;q=0.9",
-      Cookie:
-        "MAPSSESSIONID=OI1bultVih5qmIawygXM55aV8GJF-8_Ff73Xeo_aNtjRz_7wATq0!-157591701!-274079931",
+      Cookie: await getFedexCookie(),
     };
 
     regex = /(\/templates\/components\/apps\/wgsm\/images\/(inbound|outbound)\/\w+\.png)/gi;
