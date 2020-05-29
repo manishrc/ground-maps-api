@@ -1,4 +1,6 @@
-# Ground Maps for UPS & FedEx
+# FedEx & UPS Ground Maps
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/manishrc/ground-maps-api/)
 
 ## API
 
