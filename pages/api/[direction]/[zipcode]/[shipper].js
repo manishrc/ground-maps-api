@@ -1,13 +1,18 @@
 const sharp = require("sharp");
+
 const UPS_ENDPOINT = "https://www.ups.com/maps/results?loc=en_US";
 const FEDEX_ENDPOINT = "http://www.fedex.com/grd/maps/MapEntry.do";
 
 const getFedexCookie = async () =>
   fetch(FEDEX_ENDPOINT).then((r) => r.headers.get("set-cookie"));
-const resizeFedexImage = (imageBuffer) =>
+
+const processFedexImage = (imageBuffer) =>
   sharp(imageBuffer)
     .extract({ left: 1300, top: 24, width: 5084, height: 5296 })
-    .resize(900);
+    .removeAlpha()
+    .resize(900)
+    .jpeg({ quality: 80, chromaSubsampling: "4:4:4" })
+    .sharpen();
 
 export default async (req, res) => {
   let { direction, zipcode, shipper } = req.query;
@@ -82,9 +87,13 @@ export default async (req, res) => {
     .then(([imgPath]) => fetch(`${hostPrefix}${imgPath}`))
     .then((r) => r.arrayBuffer())
     .then((r) => Buffer.from(r))
-    .then((r) => (shipper === "fedex" ? resizeFedexImage(r) : r))
+    .then((r) => (shipper === "fedex" ? processFedexImage(r) : r))
     .catch((err) => res.send(500));
 
-  res.status(200).setHeader("Content-Type", "image/gif");
+  res.status(200);
+  res.setHeader(
+    "Content-Type",
+    shipper === "fedex" ? "image/jpeg" : "image/gif"
+  );
   res.send(image);
 };
