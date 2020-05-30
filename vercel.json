@@ -3,9 +3,17 @@
     {
       "src": "/api/(.*)",
       "headers": {
-        "cache-control": "s-maxage=604800, stale-while-revalidate"
+        "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000"
       },
       "dest": "/api/$1",
+      "continue": true
+    },
+    {
+      "src": "/",
+      "headers": {
+        "Cache-Control": "public, max-age=1, stale-while-revalidate"
+      },
+      "dest": "/",
       "continue": true
     }
   ]
