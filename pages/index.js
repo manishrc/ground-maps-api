@@ -47,7 +47,7 @@ function Home({ q }) {
       </Head>
 
       <header>
-        <h1>FedEx & Ground Maps</h1>
+        <h1>FedEx & UPS Ground Maps</h1>
       </header>
       <main>
         <input
