@@ -95,5 +95,9 @@ export default async (req, res) => {
     "Content-Type",
     shipper === "fedex" ? "image/jpeg" : "image/gif"
   );
+  res.setHeader(
+    "Cache-Control",
+    "public, max-age=604800, stale-while-revalidate=2592000"
+  );
   res.send(image);
 };
