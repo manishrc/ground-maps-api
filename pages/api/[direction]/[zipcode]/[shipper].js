@@ -4,7 +4,10 @@ const UPS_ENDPOINT = "https://www.ups.com/maps/results?loc=en_US";
 const FEDEX_ENDPOINT = "http://www.fedex.com/grd/maps/MapEntry.do";
 
 const getFedexCookie = async () =>
-  fetch(FEDEX_ENDPOINT).then((r) => r.headers.get("set-cookie"));
+  fetch(FEDEX_ENDPOINT).then((r) => {
+    const responseCookie = r.headers.get("set-cookie");
+    return /(MAPSSESSIONID\=.*?;)/.exec(responseCookie)[0];
+  });
 
 const processFedexImage = (imageBuffer) =>
   sharp(imageBuffer)
